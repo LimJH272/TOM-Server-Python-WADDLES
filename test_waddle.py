@@ -22,7 +22,7 @@ def main():
     # CALL #2: LOCATION + IMAGE -> Single Combined Analysis
     # ---------------------------------------------------------------------
     words_array, summary_text = vision_client.analyze_location_and_image(location_info, IMAGE_PATH)
-
+ 
     # ---------------------------------------------------------------------
     # OUTPUT #1: JSON of Keywords
     # ---------------------------------------------------------------------
