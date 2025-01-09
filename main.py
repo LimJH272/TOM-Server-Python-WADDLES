@@ -12,6 +12,7 @@ def _load_environment(env):
     print(f"Running in {env} environment")
 
     env_file = f".env.{env}"
+    env_file = f".env.{env}"
 
     if not file_utility.is_file_exists(env_file):
         raise FileNotFoundError(f"The environment file '{env_file}' was not found.")
