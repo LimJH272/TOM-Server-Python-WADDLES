@@ -1,5 +1,5 @@
 # Example usage in another file (e.g., test_api.py)
-from APIs.waddle import Waddle, get_news_nearby
+from APIs.waddle import Waddle, get_news_nearby, EMAIL_RECEIVER
 
 # Hardcoded lat/long for example
 latitude, longitude = 1.3132469, 103.8834834
@@ -9,33 +9,38 @@ IMAGE_PATH = "geylang.jpg"
 
 
 def main():
-     # Initialize the Waddle API client
+    # Initialize the Waddle API client
     vision_client = Waddle.VisionClient()
 
     # ---------------------------------------------------------------------
     # CALL #1: LOCATION ANALYSIS
     # ---------------------------------------------------------------------
-    location_info = get_news_nearby(latitude, longitude)
+    location_info, sources = get_news_nearby(latitude, longitude)
 
     # ---------------------------------------------------------------------
     # CALL #2: LOCATION + IMAGE -> Single Combined Analysis
     # ---------------------------------------------------------------------
-    words_array, summary_text = vision_client.analyze_location_and_image(location_info, IMAGE_PATH)
- 
-    # ---------------------------------------------------------------------
-    # OUTPUT #1: JSON of Keywords
-    # ---------------------------------------------------------------------
-    import json
-    print(json.dumps({"words": words_array}, indent=2))
+    safe_or_danger_string, summary_text = vision_client.analyze_location_and_image(location_info, IMAGE_PATH)
 
     # ---------------------------------------------------------------------
-    # OUTPUT #2: TTS of the Summary
+    # CREATE REPORT
+    # ---------------------------------------------------------------------
+    report_text = vision_client.create_report(location_info, summary_text, sources)
+
+    # ---------------------------------------------------------------------
+    # TTS (Text-to-Speech)
     # ---------------------------------------------------------------------
     audio_file = vision_client.generate_tts_summary(summary_text)
-    if audio_file:
-        print(f"\nTTS audio saved as {audio_file}.")
-    else:
-        print("No audio file generated")
+
+    # ---------------------------------------------------------------------
+    # SEND EMAIL
+    # ---------------------------------------------------------------------
+    vision_client.send_email(report_text, safe_or_danger_string, EMAIL_RECEIVER, audio_file, IMAGE_PATH)
+
+    # ---------------------------------------------------------------------
+    # CREATE JSON OUTPUT
+    # ---------------------------------------------------------------------
+    vision_client.create_json_output(safe_or_danger_string, audio_file)
 
 
 if __name__ == "__main__":
