@@ -1,5 +1,6 @@
 # Example usage in another file (e.g., test_api.py)
-from APIs.waddle import Waddle, get_news_nearby
+from api import Waddle
+from api import get_news_nearby
 
 # Hardcoded lat/long for example
 latitude, longitude = 1.3132469, 103.8834834
