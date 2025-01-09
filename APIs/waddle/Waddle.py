@@ -8,7 +8,7 @@ from gtts import gTTS
 from Utilities import logging_utility
 
 # Import the model id
-from . import MODEL_ID
+from . import MODEL_ID, GENAI_API_KEY
 
 _logger = logging_utility.setup_logger(__name__)
 
@@ -22,6 +22,7 @@ class VisionClient:
       This method initializes the Google Cloud Vision API.
       """
       self.model = genai.GenerativeModel(MODEL_ID)
+      genai.configure(api_key=GENAI_API_KEY)
 
     def analyze_location_and_image(self, location_text: str, image_path: str) -> tuple[list, str]:
         """
