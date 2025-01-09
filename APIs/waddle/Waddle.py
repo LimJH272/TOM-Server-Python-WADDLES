@@ -23,7 +23,7 @@ class VisionClient:
       """
       self.model = genai.GenerativeModel(MODEL_ID)
 
-    def analyze_location_and_image(self, location_text: str, image_path: str) -> (list, str):
+    def analyze_location_and_image(self, location_text: str, image_path: str) -> tuple[list, str]:
         """
         Uses the LLM to analyze both the location info AND the image in a single prompt.
         Returns a list of keywords (5) and a short summary. Expects the LLM to return JSON.

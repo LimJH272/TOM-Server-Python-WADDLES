@@ -13,15 +13,15 @@ _logger = logging_utility.setup_logger(__name__)
 # Model name—adjust to one you have access to (e.g., "gemini-1.5-pro-latest")
 MODEL_ID = "gemini-2.0-flash-exp"
 
-def _set_google_cloud_api_key():
-    _logger.info('Setting Google credentials')
-    # The Google Cloud Library looks for this "GOOGLE_APPLICATION_CREDENTIALS" in
-    # the environment variable by default (source: https://cloud.google.com/docs/authentication/application-default-credentials)
-    google_cloud_credentials_file = get_credentials_file_path(
-        base_keys.GOOGLE_CLOUD_CREDENTIAL_FILE_KEY_NAME)
-    set_env_variable("GOOGLE_APPLICATION_CREDENTIALS", google_cloud_credentials_file)
+# def _set_google_cloud_api_key():
+#     _logger.info('Setting Google credentials')
+#     # The Google Cloud Library looks for this "GOOGLE_APPLICATION_CREDENTIALS" in
+#     # the environment variable by default (source: https://cloud.google.com/docs/authentication/application-default-credentials)
+#     google_cloud_credentials_file = get_credentials_file_path(
+#         base_keys.GOOGLE_CLOUD_CREDENTIAL_FILE_KEY_NAME)
+#     set_env_variable("GOOGLE_APPLICATION_CREDENTIALS", google_cloud_credentials_file)
 
-_set_google_cloud_api_key()
+# _set_google_cloud_api_key()
 
 # Load environment variables and setup clients. Only do it once when module loads.
 load_dotenv()
@@ -30,6 +30,8 @@ GENAI_API_KEY = os.getenv("GENAI_API_KEY")
 client = google_genai.Client(api_key=GENAI_API_KEY)
 gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 
+KEY_GEMINI_API = "gemini_api_key"
+GEMINI_CREDENTIAL_FILE = get_credentials_file_path(base_keys.GEMINI_CREDENTIAL_FILE_KEY_NAME)
 
 def get_news_nearby(latitude: float, longitude: float) -> str:
     """
