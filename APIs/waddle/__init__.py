@@ -1,6 +1,6 @@
 ﻿import base_keys
 from Utilities.environment_utility import set_env_variable
-from Utilities.file_utility import get_credentials_file_path
+from Utilities.file_utility import get_credentials_file_path, read_json_file
 from Utilities import logging_utility
 import os
 import googlemaps
@@ -24,14 +24,30 @@ MODEL_ID = "gemini-2.0-flash-exp"
 # _set_google_cloud_api_key()
 
 # Load environment variables and setup clients. Only do it once when module loads.
-load_dotenv()
-GMAPS_API_KEY = os.getenv("GMAPS_API_KEY")
-GENAI_API_KEY = os.getenv("GENAI_API_KEY")
+# load_dotenv()
+# GMAPS_API_KEY = os.getenv("GMAPS_API_KEY")
+# GENAI_API_KEY = os.getenv("GENAI_API_KEY")
+# client = google_genai.Client(api_key=GENAI_API_KEY)
+# gmaps = googlemaps.Client(key=GMAPS_API_KEY)
+
+# def _set_api_keys():
+#     _logger.info('Setting Gemini credentials')
+
+#     gemini_credentials_file = get_credentials_file_path(
+#         base_keys.GEMINI_CREDENTIAL_FILE_KEY_NAME)
+#     gemini_api_key = read_json_file(gemini_credentials_file)['gemini_api_key']
+#     set_env_variable("GENAI_API_KEY", gemini_api_key)
+
+# _set_api_keys()
+
+def _get_credential(filepath: str, key: str):
+    _logger.info(f'Getting {key} from {filepath}')
+    return read_json_file(filepath)[key]
+
+GMAPS_API_KEY = _get_credential(get_credentials_file_path(base_keys.GOOGLE_MAPS_CREDENTIAL_FILE_KEY_NAME), 'map_api_key')
+GENAI_API_KEY = _get_credential(get_credentials_file_path(base_keys.GEMINI_CREDENTIAL_FILE_KEY_NAME), 'gemini_api_key')
 client = google_genai.Client(api_key=GENAI_API_KEY)
 gmaps = googlemaps.Client(key=GMAPS_API_KEY)
-
-KEY_GEMINI_API = "gemini_api_key"
-GEMINI_CREDENTIAL_FILE = get_credentials_file_path(base_keys.GEMINI_CREDENTIAL_FILE_KEY_NAME)
 
 def get_news_nearby(latitude: float, longitude: float) -> str:
     """
