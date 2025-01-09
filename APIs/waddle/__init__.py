@@ -1,6 +1,6 @@
 ﻿import base_keys
 from Utilities.environment_utility import set_env_variable
-from Utilities.file_utility import get_credentials_file_path, read_json_file
+from Utilities.file_utility import get_credentials_file_path, read_json_file, get_project_root
 from Utilities import logging_utility
 import os
 import googlemaps
@@ -17,8 +17,20 @@ def _get_credential(filepath: str, key: str):
     _logger.info(f'Getting {key} from {filepath}')
     return read_json_file(filepath)[key]
 
-GMAPS_API_KEY = _get_credential('./credential/google_maps_credential.json', 'map_api_key')
-GENAI_API_KEY = _get_credential('./credential/gemini_credential.json', 'gemini_api_key')
+try:
+    GMAPS_KEY_LOC = get_credentials_file_path(base_keys.GOOGLE_MAPS_CREDENTIAL_FILE_KEY_NAME)
+except:
+    _logger.info('get_credentials_file_path failed for GMAPS_API_KEY. Using fallback')
+    GMAPS_KEY_LOC = os.path.join(get_project_root(), "credential", 'google_maps_credential.json')
+
+try:
+    GENAI_KEY_LOC = get_credentials_file_path(base_keys.GEMINI_CREDENTIAL_FILE_KEY_NAME)
+except:
+    _logger.info('get_credentials_file_path failed for GENAI_API_KEY. Using fallback')
+    GENAI_KEY_LOC = os.path.join(get_project_root(), "credential", 'gemini_credential.json')
+
+GMAPS_API_KEY = _get_credential(GMAPS_KEY_LOC, 'map_api_key')
+GENAI_API_KEY = _get_credential(GENAI_KEY_LOC, 'gemini_api_key')
 client = google_genai.Client(api_key=GENAI_API_KEY)
 gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 

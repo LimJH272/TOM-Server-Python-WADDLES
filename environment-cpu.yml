@@ -66,3 +66,4 @@ dependencies:
       - python_multipart~=0.0.9
       - typing-extensions~=4.12.2
       - gTTS~=2.5.4
+      - beautifulsoup4
