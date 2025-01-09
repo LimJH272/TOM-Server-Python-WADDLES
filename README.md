@@ -23,6 +23,7 @@ A Python implementation of the server that handles the client data and applicati
     - If the installation fails due to `egg_info`, change the dependency `psycopg2` to `psycopg2-binary` in `environment-cpu.yml`
     - If the installation fails due to `googlemaps`, either remove it from `environment-cpu.yml` or install it separately using `pip install --use-pep517 googlemaps` after activating the `tom` environment.
 - Activate `tom` environment, `conda activate tom`
+- Install `google-genai` and `google-generativeai` using `pip install google-genai google-generativeai`
 - Download the pretrained weights for YOLOv8 from [Ultralytics](https://github.com/ultralytics/ultralytics) (e.g., [yolov8n.pt](https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt)).
   - Copy the downloaded file to the `Processors/Yolov8/weights` directory and rename it as `model.pt` (i.e., `Processors/Yolov8/weights/model.pt`).
 - Create the environment files:

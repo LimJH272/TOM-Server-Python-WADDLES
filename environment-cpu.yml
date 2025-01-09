@@ -64,3 +64,5 @@ dependencies:
       - python-docx~=1.1.2
       - pymilvus~=2.4.4
       - python_multipart~=0.0.9
+      - typing-extensions~=4.12.2
+      - gTTS~=2.5.4
