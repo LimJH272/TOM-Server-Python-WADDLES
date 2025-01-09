@@ -43,7 +43,7 @@ EMAIL_RECEIVER = EMAIL_SENDER
 client = google_genai.Client(api_key=GENAI_API_KEY)
 gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 
-def get_news_nearby(latitude: float, longitude: float) -> (str, list):
+def get_news_nearby(latitude: float, longitude: float) -> tuple[str, list]:
     """
     Reverse-geocode the given latitude/longitude to find a textual area name.
     Then use a Google Search tool to find suspicious activity or relevant news

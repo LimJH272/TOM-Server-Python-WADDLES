@@ -136,9 +136,9 @@ class VisionClient:
         <html>
           <head></head>
           <body>
+            <p><b>Safe or Danger:</b> {safe_or_danger}</p>
             <p><b>Report:</b></p>
             {html}
-            <p><b>Safe or Danger:</b> {safe_or_danger}</p>
           </body>
         </html>
         """
