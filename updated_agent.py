@@ -31,10 +31,10 @@ EMAIL_RECEIVER = EMAIL_SENDER  # Send to yourself
 MODEL_ID = "gemini-2.0-flash-exp"
 
 # Hardcoded lat/long for example
-latitude, longitude = 1.3132469, 103.8834834
+latitude, longitude = 37.788132839912215, -122.40753565325528
 
 # A local image path for analysis
-IMAGE_PATH = "geylang.jpg"
+IMAGE_PATH = "union_sq.jpg"
 
 # SMTP server details (for Gmail)
 SMTP_SERVER = 'smtp.gmail.com'
@@ -50,7 +50,7 @@ gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 # -------------------------------------------------------------------------
 # 3) GET LOCATION INFO (LLM + Google Search Tool) -- CALL #1
 # -------------------------------------------------------------------------
-def get_news_nearby(latitude: float, longitude: float) -> (str, list):
+def get_news_nearby(latitude: float, longitude: float) -> tuple[str, list]:
     """
     Reverse-geocode the given latitude/longitude to find a textual area name.
     Then use a Google Search tool to find suspicious activity or relevant news
@@ -101,7 +101,7 @@ def get_news_nearby(latitude: float, longitude: float) -> (str, list):
 # -------------------------------------------------------------------------
 # 4) COMBINE IMAGE + LOCATION IN A SINGLE PROMPT -- CALL #2
 # -------------------------------------------------------------------------
-def analyze_location_and_image(location_text: str, image_path: str) -> (str, str):
+def analyze_location_and_image(location_text: str, image_path: str) -> list[str, str]:
     """
     Uses the LLM to analyze both the location info AND the image in a single prompt.
     Returns a string that says "Safe" or "Danger", and a short summary.

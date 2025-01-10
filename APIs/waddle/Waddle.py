@@ -136,7 +136,7 @@ class VisionClient:
         <html>
           <head></head>
           <body>
-            <p><b>Safe or Danger:</b> {safe_or_danger}</p>
+            <h2>You are {'in' if safe_or_danger.lower() == 'danger' else ''} {safe_or_danger}</h2>
             <p><b>Report:</b></p>
             {html}
           </body>
@@ -174,7 +174,7 @@ class VisionClient:
                 server.starttls()  # Start TLS encryption
                 server.login(EMAIL_SENDER, EMAIL_PASSWORD)
                 server.sendmail(EMAIL_SENDER, email_receiver, msg.as_string())
-            print("Email sent successfully!")
+            print(f"Email sent successfully to {email_receiver}!")
 
         except Exception as e:
             print(f"An error occurred while sending email: {e}")

@@ -39,7 +39,7 @@ GMAPS_API_KEY = _get_credential(GMAPS_KEY_LOC, 'map_api_key')
 GENAI_API_KEY = _get_credential(GENAI_KEY_LOC, 'gemini_api_key')
 EMAIL_SENDER = _get_credential(EMAIL_KEY_LOC, 'email_sender')
 EMAIL_PASSWORD = _get_credential(EMAIL_KEY_LOC, 'email_password')
-EMAIL_RECEIVER = EMAIL_SENDER
+    
 client = google_genai.Client(api_key=GENAI_API_KEY)
 gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 

@@ -1,12 +1,16 @@
 # Example usage in another file (e.g., test_api.py)
-from APIs.waddle import Waddle, get_news_nearby, EMAIL_RECEIVER
+from APIs.waddle import Waddle, get_news_nearby, EMAIL_SENDER
 
 # Hardcoded lat/long for example
-latitude, longitude = 1.3132469, 103.8834834
+latitude, longitude = 37.788132839912215, -122.40753565325528
 
 # A local image path for analysis
-IMAGE_PATH = "geylang.jpg"
+IMAGE_PATH = "union_sq.jpg"
 
+# Receiver email address
+# EMAIL_RECEIVER = EMAIL_SENDER
+# EMAIL_RECEIVER = '<---your email--->'
+EMAIL_RECEIVER = 'limjiehan02@gmail.com'
 
 def main():
     # Initialize the Waddle API client
