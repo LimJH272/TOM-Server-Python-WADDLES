@@ -1,0 +1,35 @@
+input:
+  # - name: "camera"
+  #   entrypoint: "camera_widget.CameraWidget.start"
+  #   exitpoint: ""
+  #   next:
+  #     - "processing:yolov8"
+  - name: "websocket"
+    entrypoint: "websocket_widget.WebsocketWidget.start"
+    exitpoint: ""
+    next:
+      - "service:phototemplate"
+service: 
+  - name: "phototemplate"
+    entrypoint: "photo_template_service.photo_template_service.PhotoTemplateService.run"
+    exitpoint: ""
+    next:
+      # For returning detection results to client
+      - "output:websocket"
+      # Hook video output to check on the output frame. 
+      - "output:video_output" 
+# processing:
+#   - name: "yolov8"
+#     entrypoint: "Yolov8.detector.Yolov8Detector.run"
+#     exitpoint: ""
+#     next:
+#       # Back to phototemplate for handling results
+#       - "service:phototemplate"
+#       - "output:video_output"
+output:
+  - name: "websocket"
+    entrypoint: "websocket_output.WebsocketOutput.send"
+    exitpoint: ""
+  - name: "video_output"
+    entrypoint: "video_output.VideoOutput.play"
+    exitpoint: "video_output.VideoOutput.stop"

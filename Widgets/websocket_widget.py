@@ -38,9 +38,9 @@ class WebsocketWidget(BaseComponent):
                 continue
 
             # To check for which service requires the specific message type, we convert the protobuf message to dict
-            data = protobuf_json_format.MessageToDict(data, preserving_proto_field_name=True)
+            jsondata = protobuf_json_format.MessageToDict(data, preserving_proto_field_name=True)
 
-            super().send_to_component(websocket_message=data, websocket_datatype=data_type_key)
+            self.send_to_component(websocket_message=jsondata, websocket_datatype=data_type_key, websocket_data=data)
 
             # HACK: Allow other threads to run
             time_utility.sleep_seconds(_NO_DATA_SLEEP_SECONDS)

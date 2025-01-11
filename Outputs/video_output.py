@@ -15,6 +15,11 @@ class VideoOutput(BaseComponent):
     A class to handle video output, including displaying frames and saving them to a file.
     """
 
+    SUPPORTED_DATATYPES = {
+        "PHOTO_TEMPLATE_IMAGE_FRAME_DATA",
+        # "REQUEST_TEMPLATE_DATA"
+    }
+
     def __init__(self, name) -> None:
         super().__init__(name)
 
@@ -36,13 +41,22 @@ class VideoOutput(BaseComponent):
 
             self._handle_video_data(frame, camera_frame_width, camera_frame_height, camera_fps)
 
-        if origin == base_keys.CAMERA_WIDGET:
+        elif origin == base_keys.CAMERA_WIDGET:
             frame = raw_data[base_keys.CAMERA_FRAME]
             camera_frame_width = raw_data[base_keys.CAMERA_FRAME_WIDTH]
             camera_frame_height = raw_data[base_keys.CAMERA_FRAME_HEIGHT]
             camera_fps = raw_data[base_keys.CAMERA_FPS]
 
             self._handle_video_data(frame, camera_frame_width, camera_frame_height, camera_fps)
+
+        elif origin == base_keys.PHOTOTEMPLATE_SERVICE:
+            frame = raw_data[base_keys.CAMERA_FRAME]
+            camera_frame_width = raw_data[base_keys.CAMERA_FRAME_WIDTH]
+            camera_frame_height = raw_data[base_keys.CAMERA_FRAME_HEIGHT]
+            camera_fps = 1 # UNUSED. 
+
+            self._handle_video_data(frame, camera_frame_width, camera_frame_height, camera_fps)
+
 
     def _handle_video_data(self, frame, camera_frame_width, camera_frame_height, camera_fps):
         # _logger.debug("_handle_video_data - camera_frame_width: {camera_frame_width}, "

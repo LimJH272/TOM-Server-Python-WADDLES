@@ -39,10 +39,10 @@ class VisionClient:
                 tts.save(audio_file)
                 return audio_file
             except Exception as e:
-                print("Error generating TTS audio:", e)
+                _logger.error(f"Error generating TTS audio: {e}")
                 return None
         else:
-            print("No summary text to convert to speech.")
+            _logger.warn("No summary text to convert to speech.")
             return None
 
 
@@ -119,8 +119,8 @@ class VisionClient:
 
         return report
 
-    def send_email(self, report_text, safe_or_danger, email_receiver, audio_file=None, image_path=None):
-        """Sends the report, safe/danger status, image, and audio via email."""
+    def send_email(self, report_text, safe_or_danger, email_receiver, audio_file=None, image_path=None, video_path=None):
+        """Sends the report, safe/danger status, image, video, and audio via email."""
 
         # Create the email message
         msg = MIMEMultipart()
@@ -152,9 +152,9 @@ class VisionClient:
                     img.add_header('Content-Disposition', 'attachment', filename=os.path.basename(image_path))
                     msg.attach(img)
             except FileNotFoundError:
-                print(f"Error: Image file not found at {image_path}")
+                _logger.error(f"Error: Image file not found at {image_path}")
             except Exception as e:
-                print(f"Error attaching image: {e}")
+                _logger.error(f"Error attaching image: {e}")
 
         # Attach audio file (if available)
         if audio_file:
@@ -168,16 +168,27 @@ class VisionClient:
             )
             msg.attach(part)
 
+        if video_path:
+            with open(video_path, "rb") as attachment:
+                part = MIMEBase("application", "octet-stream")
+                part.set_payload(attachment.read())
+            encoders.encode_base64(part)
+            part.add_header(
+                "Content-Disposition",
+                f"attachment; filename= {os.path.basename(video_path)}",
+            )
+            msg.attach(part)
+
         try:
             # Connect to the SMTP server
             with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
                 server.starttls()  # Start TLS encryption
                 server.login(EMAIL_SENDER, EMAIL_PASSWORD)
                 server.sendmail(EMAIL_SENDER, email_receiver, msg.as_string())
-            print(f"Email sent successfully to {email_receiver}!")
+            _logger.info(f"Email sent successfully to {email_receiver}!")
 
         except Exception as e:
-            print(f"An error occurred while sending email: {e}")
+            _logger.error(f"An error occurred while sending email: {e}")
 
     def create_json_output(self, safe_or_danger, audio_file=None):
         """Creates a JSON file with safe/danger status and base64 audio."""
@@ -192,10 +203,10 @@ class VisionClient:
                     encoded_audio = base64.b64encode(audio_file.read()).decode('utf-8')
                 json_data["audio_base64"] = encoded_audio
             except FileNotFoundError:
-                print(f"Error: Audio file not found at {audio_file}")
+                _logger.error(f"Error: Audio file not found at {audio_file}")
             except Exception as e:
-                print(f"Error encoding audio to base64: {e}")
+                _logger.error(f"Error encoding audio to base64: {e}")
 
         with open("output.json", "w") as json_file:
             json.dump(json_data, json_file, indent=2)
-        print("JSON output saved to output.json")
+        _logger.info("JSON output saved to output.json")

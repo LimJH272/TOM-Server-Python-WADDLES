@@ -230,5 +230,9 @@
   "DASHBOARD_REQUEST_LIVE_DATA": {
     "key": 602,
     "proto_file": "Dashboard/dashboard_request_live_data_pb2.py"
+  },
+  "PHOTO_TEMPLATE_IMAGE_FRAME_DATA": {
+    "key": 1001,
+    "proto_file": "Template/image_frame_data_pb2.py"
   }
 }

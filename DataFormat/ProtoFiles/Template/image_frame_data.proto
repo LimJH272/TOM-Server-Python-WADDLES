@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+message ImageFrameData {
+    optional int64 ts = 1;
+    optional int32 width = 2;
+    optional int32 height = 3; 
+    repeated bytes image = 4;
+    optional int32 cmd = 5;
+    optional string params = 6;
+}

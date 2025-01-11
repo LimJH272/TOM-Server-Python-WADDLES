@@ -27,6 +27,7 @@ MARTIAL_ARTS_SERVICE = "service:martial_arts"
 RUNNING_DEMO_SERVICE = "service:runningDemo"
 CONTEXT_SERVICE = "service:context"
 DASHBOARD_SERVICE = "service:dashboardService"
+PHOTOTEMPLATE_SERVICE = "service:phototemplate"
 
 WEBSOCKET_OUTPUT = "output:websocket"
 
@@ -62,6 +63,7 @@ EMOTION_SCORES = "emotion_scores"
 WEBSOCKET_DATATYPE = "websocket_datatype"
 WEBSOCKET_MESSAGE = "websocket_message"
 WEBSOCKET_CLIENT_TYPE = "websocket_client_type"
+WEBSOCKET_DATA = "websocket_data"
 
 UNITY_CLIENT = "unity"
 WEAROS_CLIENT = "wearOS"

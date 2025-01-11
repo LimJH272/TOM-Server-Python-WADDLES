@@ -1,5 +1,6 @@
 from math import sqrt
 import base64
+import io
 import cv2
 import numpy as np
 import requests
@@ -26,6 +27,13 @@ def get_similarity_images(image1, image2, threshold):
 
     similarity = 1 - (pixel_diff_count / pixel_count)
     return similarity
+
+def get_frame_from_bytes(image_bytes):
+    """
+    Convert image bytes (PNG, JPEG) to a numpy array (opencv frame)
+    """
+    image = Image.open(io.BytesIO(image_bytes))
+    return np.array(image)
 
 
 def get_pixel_diff(pixel1, pixel2):
